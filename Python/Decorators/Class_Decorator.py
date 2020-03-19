@@ -55,10 +55,12 @@ class TimeItCritical:
             res = method(*args, **kwargs)
             te = time.monotonic()
             delta = te - ts
+            timeit_wrapper.time_exec = delta
             if delta > critical_time:
                 print(f"{desc}{method.__name__} executed slow: {delta:2.2f} sec")
             return res
 
+        timeit_wrapper.time_exec = 0
         return timeit_wrapper
 
     @staticmethod
